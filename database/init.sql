@@ -56,7 +56,7 @@ VALUES
 CREATE OR REPLACE FUNCTION calculate_cart_total()
 RETURNS NUMERIC(10,2)
 LANGUAGE plpgsql
-AS Get-ChildItem
+AS $$
 DECLARE
     total NUMERIC(10,2);
 BEGIN
@@ -68,7 +68,7 @@ BEGIN
 
     RETURN total;
 END;
-Get-ChildItem;
+$$;
 
 -- =========================================================
 -- 6. PROCEDURE
@@ -77,7 +77,7 @@ Get-ChildItem;
 
 CREATE OR REPLACE PROCEDURE checkout()
 LANGUAGE plpgsql
-AS Get-ChildItem
+AS $$
 DECLARE
     new_order_id INT;
     cart_total NUMERIC(10,2);
@@ -99,7 +99,7 @@ BEGIN
 
     DELETE FROM cart;
 END;
-Get-ChildItem;
+$$;
 
 -- =========================================================
 -- 7. TRIGGER FUNCTION
@@ -109,7 +109,7 @@ Get-ChildItem;
 CREATE OR REPLACE FUNCTION check_stock()
 RETURNS TRIGGER
 LANGUAGE plpgsql
-AS Get-ChildItem
+AS $$
 BEGIN
     IF NEW.stock < 0 THEN
         RAISE EXCEPTION
@@ -119,7 +119,7 @@ BEGIN
 
     RETURN NEW;
 END;
-Get-ChildItem;
+$$;
 
 -- =========================================================
 -- 8. TRIGGER
